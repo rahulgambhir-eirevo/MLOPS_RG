@@ -15,4 +15,4 @@ inputs:
 environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest  # Azure ML environment to use
 compute: azureml:my-compute-cluster  # Replace with your compute target name
 experiment_name: diabetes-training-experiment  # Meaningful name for your experiment
-description: Train a classification model using diabetes dataset
+description: Train a classification model using diabetes dataset #updated
