@@ -1,15 +1,17 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
-code: model
+code: src/model  # The path to the code folder containing the train.py script
 command: >-
-  python 
-  --
-  --
+  python train.py --training_data ${{inputs.training_data}} --reg_rate ${{inputs.reg_rate}}
+  
 inputs:
   training_data: 
     type: uri_folder 
-    path: 
-  reg_rate: 0.01
-environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
-compute: 
-experiment_name: 
-description: 
+    path: azureml:diabetes-dev-folder@latest  # Reference to the registered data asset
+  reg_rate: 
+    type: number
+    default: 0.01
+
+environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest  # Use the existing Azure ML environment
+compute: <your-compute-target-name>  # Replace with your compute target name
+experiment_name: diabetes-training-experiment  # Choose a meaningful experiment name
+description: Train a classification model using diabetes dataset
