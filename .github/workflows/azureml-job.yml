@@ -1,0 +1,32 @@
+name: Run Azure ML Job
+
+on:
+  push:
+    branches:
+      - main  # This workflow will run on pushes to the main branch
+
+jobs:
+  azure-ml-job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Log in to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Install Azure ML CLI
+      run: |
+        pip install --upgrade azure-cli
+        az extension add -n ml -y
+
+    - name: Submit Azure ML Job
+      run: |
+        az ml job create --file src/model/job.yml
